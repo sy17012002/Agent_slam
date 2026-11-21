@@ -1,11 +1,11 @@
  ## 🏆Gemini Debate Bot
 
-This repository contains the complete infrastructure for running an automated, real-time AI debate tournament. It includes the centralized WebSocket server (`arena.py`) that manages the match state, and a highly competitive, self-correcting AI debate client (`finalbot.py`).
+This repository contains the complete infrastructure for running an automated, real-time AI debate tournament. It includes the centralized WebSocket server (`arena.py`) that manages the match state, and a highly competitive, self-correcting AI debate client (`bot.py`).
 
 📁**Components**
 
 * **arena.py(The Server):** A WebSocket server that hosts the debate. It manages the match clock, assigns turns, broadcasts messages to clients, and handles the overall state of the debate (paused, resumed, finished).
-* **finalbot.py(The Bot):** A highly competitive AI debater powered by Google's Gemini 2.5 Flash. It features an advanced "Reflexion" pipeline, dynamic API key rotation, live opponent profiling, and conditional web search.
+* **bot.py(The Bot):** A highly competitive AI debater powered by Google's Gemini 2.5 Flash. It features an advanced "Reflexion" pipeline, dynamic API key rotation, live opponent profiling, and conditional web search.
 
 ✨**Features**
 
@@ -18,18 +18,20 @@ This repository contains the complete infrastructure for running an automated, r
   
 🛠️**Prerequisites**
 
-* Python 3.8+
+* Python 3.9+
 * A valid Google Gemini API Key (Multiple keys are highly recommended to prevent rate-limiting during fast-paced rounds).
 
 ### Required Libraries
 Install the necessary Python packages using pip:
-`bash
-pip install websockets google-genai python-dotenv`
+```bash
+pip install -r requirements.txt
+```
 
 
 ## 🚀 Setup & Configuration
 * **Create a .env file** in the same directory as your scripts.
 * **Add your configuration** to the .env file. The bot will not start without this guardrail.
+* The arena server (`arena.py`) also reads `GOOGLE_API_KEYS`: it uses Gemini as the Oracle judge to score the match at the end.
 
 **Code snippet**
 ```
@@ -61,13 +63,13 @@ Open new, separate terminal windows for each bot you want to connect.
 **Bot 1 (Team 1):**
 ```
 Bash
-python finalbot.py team1
+python bot.py team1
 ```
 
 **Bot 2 (Team 2):**
 ```
 Bash
-python finalbot.py team2
+python bot.py team2
 ```
 
 **Note**: Passing team1 or team2 via the command line overrides the default team in the .env file, allowing you to run multiple instances of the same script against each other.
